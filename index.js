@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 // routes
 
 app.use('/', (req,res)=>{
-    res.send("Hello There, welcome back!");
+    res.send("Hello, Be patient!");
 })
 
 
