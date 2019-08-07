@@ -27,6 +27,9 @@ mongoose.connect(keys.mongoURI, {
 const PORT = process.env.PORT || 5000;
 
 // routes
+app.use('/', (req,res)=>{
+    res.send("TESSSST");
+});
 require('./routes/authRoutes')(app);
 
  
