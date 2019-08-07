@@ -14,7 +14,7 @@ passport.deserializeUser((id,done)=>{
 
 passport.use(new GoogleStartegy({
     clientID:keys.googleClientID,
-    clientSecret: keys.googleClientSectret,
+    clientSecret: keys.googleClientSecret,
     callbackURL: '/auth/google/callback',
     proxy: true
 }, (accessToken,refreshToken,profile,done)=>{
