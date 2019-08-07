@@ -1,23 +1,35 @@
 // imports
 const express = require('express');
+require('./models/User');
+require('./services/passport');
+const mongoose = require('mongoose');
+const keys = require('./config/keys');
+const cookieSession = require('cookie-session');
 const passport = require('passport');
-const GoogleStartegy = require('passport-google-oauth20').Strategy;
 
 // express app
 const app = express();
 
-// ports 
+app.use(cookieSession({
+    maxAge:30*24*60*60*1000,
+    keys: [keys.cookieKey]
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+//connect to DB
+mongoose.connect(keys.mongoURI, {
+    useNewUrlParser: true
+})
+
+// consts
 const PORT = process.env.PORT || 5000;
 
-// passport to google
-passport.use(new GoogleStartegy());
-
 // routes
+require('./routes/authRoutes')(app);
 
-app.use('/', (req,res)=>{
-    res.send("Hello, Be patient!");
-});
-
+ 
 
 
 // start the server
