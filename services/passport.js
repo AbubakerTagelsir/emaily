@@ -17,15 +17,15 @@ passport.use(new GoogleStartegy({
     clientSecret: keys.googleClientSecret,
     callbackURL: '/auth/google/callback',
     proxy: true
-}, (accessToken,refreshToken,profile,done)=>{
-    User.findOne({googleId:profile.id}).then(user=>{
+}, async (accessToken,refreshToken,profile,done)=>{
+    const user = await User.findOne({googleId:profile.id})
         if(user){
-            console.log("User Already exist!");
             done(null,user);
-        }else{
-            new User({googleId:profile.id}).save().then(user=>done(null,user));
         }
-    });
+        const newUser = await new User({googleId:profile.id}).save()
+        done(null,newUser);
+        
+    }));
     
-}));
+
 
